@@ -37,6 +37,26 @@ static void groupRomans(int frequencyArray[26]){
       frequencyArray[getFrequencyIndex('I')]=frequencyArray[getFrequencyIndex('I')]-5;
       frequencyArray[getFrequencyIndex('V')]++;
    }
+   if (frequencyArray[getFrequencyIndex('V')]>=2){
+      frequencyArray[getFrequencyIndex('V')]=frequencyArray[getFrequencyIndex('V')]-2;
+      frequencyArray[getFrequencyIndex('X')]++;
+   }
+   if (frequencyArray[getFrequencyIndex('X')]>=5){
+      frequencyArray[getFrequencyIndex('X')]=frequencyArray[getFrequencyIndex('X')]-5;
+      frequencyArray[getFrequencyIndex('L')]++;
+   }
+   if (frequencyArray[getFrequencyIndex('L')]>=2){
+      frequencyArray[getFrequencyIndex('L')]=frequencyArray[getFrequencyIndex('L')]-2;
+      frequencyArray[getFrequencyIndex('C')]++;
+   }
+   if (frequencyArray[getFrequencyIndex('C')]>=5){
+      frequencyArray[getFrequencyIndex('C')]=frequencyArray[getFrequencyIndex('C')]-5;
+      frequencyArray[getFrequencyIndex('D')]++;
+   }
+   if (frequencyArray[getFrequencyIndex('D')]>=2){
+      frequencyArray[getFrequencyIndex('D')]=frequencyArray[getFrequencyIndex('D')]-2;
+      frequencyArray[getFrequencyIndex('M')]++;
+   }
 }
 
 static void sortRomans(char* sortedReturnValue, const char* concatinatedValue){
