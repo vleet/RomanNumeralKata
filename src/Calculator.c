@@ -26,7 +26,7 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, const in
    char* p=sortedReturnValue;
    while (ALL_ROMANS[d] != '\0')
    {
-      if ( count[ALL_ROMANS[d]-'A'] > 0 ){
+      for(int i=0; i<count[ALL_ROMANS[d]-'A']; i++ ){
           *p++=ALL_ROMANS[d];
       }
         d++;
