@@ -9,7 +9,7 @@ char* add(const char* val1, const char* val2){
   char* concatinatedValue=malloc(len);
   if ('V' == *val1) {
 		strcpy(concatinatedValue,val1);
-	  	strcat(concatinatedValue,val2);
+	  strcat(concatinatedValue,val2);
 	}
   else{
   		strcpy(concatinatedValue,val2);
