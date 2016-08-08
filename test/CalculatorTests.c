@@ -10,11 +10,17 @@ START_TEST(test_add_two_different_one_char_numbers_with_larger_number_on_left)
 }
 END_TEST
 
+START_TEST(test_add_two_different_one_char_numbers_with_larger_number_on_right)
+{
+    ck_assert_str_eq("VI", add("I", "V"));
+}
+END_TEST
 
 Suite* calculatorTestsSuite(void) {
     Suite * suite = suite_create("Calculator Tests");
     TCase *addRomanTestCase = tcase_create("add");
     tcase_add_test(addRomanTestCase, test_add_two_different_one_char_numbers_with_larger_number_on_left);
+    tcase_add_test(addRomanTestCase, test_add_two_different_one_char_numbers_with_larger_number_on_right);
     suite_add_tcase(suite, addRomanTestCase);
 
     return suite;
