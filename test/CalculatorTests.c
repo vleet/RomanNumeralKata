@@ -31,6 +31,11 @@ END_TEST
 START_TEST(test_add_numbers_requiring_grouping)
 {
     ck_assert_str_eq("V", add("III", "II"));
+    ck_assert_str_eq("X", add("V", "V"));
+    ck_assert_str_eq("L", add("XXX", "XX"));
+    ck_assert_str_eq("C", add("L", "L"));
+    ck_assert_str_eq("D", add("CCC", "CC"));
+    ck_assert_str_eq("M", add("D", "D"));
 }
 END_TEST
 
