@@ -16,23 +16,26 @@ static void determineRomanFrequency(int frequencyArray[26], const char* concatin
    }
  }
 
-static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, const int count[26]){
+static int getFrequencyIndex(char numeral){
+  return numeral - 'A';
+}
+
+static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, const int frequencyArray[26]){
    static const char ALL_ROMANS[] = "MDCLXVI";
 
    char* p=sortedReturnValue;
    for (int d=0; ALL_ROMANS[d] != '\0'; d++) {
-      for(int i=0; i<count[ALL_ROMANS[d]-'A']; i++ ){
+      for(int i=0; i<frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
           *p++=ALL_ROMANS[d];
       }
     } 
     *p=0;
-
 }
 
 static void groupRomans(int frequencyArray[26]){
-   if (frequencyArray['I'-'A']>=5){
-      frequencyArray['I'-'A']=frequencyArray['I'-'A']-5;
-      frequencyArray['V'-'A']++;
+   if (frequencyArray[getFrequencyIndex('I')]>=5){
+      frequencyArray[getFrequencyIndex('I')]=frequencyArray[getFrequencyIndex('I')]-5;
+      frequencyArray[getFrequencyIndex('V')]++;
    }
 }
 
