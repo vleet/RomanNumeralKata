@@ -11,25 +11,19 @@ static void concatRomans(char* concatinatedValue, const char* val1, const char* 
 }
 
 static void determineRomanFrequency(int frequencyArray[26], const char* concatinatedValue){
-   int c = 0;
-   while (concatinatedValue[c] != '\0')
-   {
+   for (int c = 0; concatinatedValue[c] != '\0'; c++) {
       frequencyArray[concatinatedValue[c]-'A']++;
-      c++;
    }
  }
 
 static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, const int count[26]){
    static const char ALL_ROMANS[] = "MDCLXVI";
 
-   int d = 0;
    char* p=sortedReturnValue;
-   while (ALL_ROMANS[d] != '\0')
-   {
+   for (int d=0; ALL_ROMANS[d] != '\0'; d++) {
       for(int i=0; i<count[ALL_ROMANS[d]-'A']; i++ ){
           *p++=ALL_ROMANS[d];
       }
-        d++;
     } 
     *p=0;
 
