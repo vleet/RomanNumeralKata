@@ -29,9 +29,17 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, const in
 
 }
 
+static void groupRomans(int frequencyArray[26]){
+   if (frequencyArray['I'-'A']>=5){
+      frequencyArray['I'-'A']=frequencyArray['I'-'A']-5;
+      frequencyArray['V'-'A']++;
+   }
+}
+
 static void sortRomans(char* sortedReturnValue, const char* concatinatedValue){
    int count[26] = {0};
    determineRomanFrequency(count,concatinatedValue);
+   groupRomans(count);
    writeProperlyFormattedRomanNumeral(sortedReturnValue,count);
 }
 
