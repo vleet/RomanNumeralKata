@@ -4,15 +4,13 @@
 #include <ctype.h>
 #include <stdbool.h>
 
-char* add(const char* val1, const char* val2){
+static void concatRomans(char* concatinatedValue, const char* val1, const char* val2){
   //Concatinate
-  int len =strlen(val1)+strlen(val1)+1;
-  char* concatinatedValue=malloc(len);
   strcpy(concatinatedValue,val1);
   strcat(concatinatedValue,val2);
+}
 
-   //Sort
-  char* sortedReturnValue=malloc(strlen(concatinatedValue)+1);
+static void sortRomans(char* sortedReturnValue, const char* concatinatedValue){
    int c = 0, count[26] = {0};
    while (concatinatedValue[c] != '\0')
    {
@@ -31,5 +29,18 @@ char* add(const char* val1, const char* val2){
         d++;
     } 
     *p=0;
+
+}
+
+char* add(const char* val1, const char* val2){
+
+  int len =strlen(val1)+strlen(val1)+1;
+  char* concatinatedValue=malloc(len);
+  concatRomans(concatinatedValue,val1,val2);
+
+  char* sortedReturnValue=malloc(strlen(concatinatedValue)+1);
+  sortRomans(sortedReturnValue,concatinatedValue);
+
+
   return sortedReturnValue;
 }
