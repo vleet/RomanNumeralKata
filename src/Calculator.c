@@ -59,7 +59,7 @@ static void groupRomans(int frequencyArray[26]){
    }
 }
 
-static void sortRomans(char* sortedReturnValue, const char* concatinatedValue){
+static void sortAndGroupRomans(char* sortedReturnValue, const char* concatinatedValue){
    int count[26] = {0};
    determineRomanFrequency(count,concatinatedValue);
    groupRomans(count);
@@ -73,7 +73,7 @@ char* add(const char* val1, const char* val2){
   concatRomans(concatinatedValue,val1,val2);
 
   char* sortedReturnValue=malloc(strlen(concatinatedValue)+1);
-  sortRomans(sortedReturnValue,concatinatedValue);
+  sortAndGroupRomans(sortedReturnValue,concatinatedValue);
 
   return sortedReturnValue;
 }
