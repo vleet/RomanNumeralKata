@@ -29,27 +29,10 @@ static int checkForSubtraction(int frequencyArray[26], char numeral, int group){
    return isSubtraction;
 }
 
-static void appendSubtractions(char* p,const char ALL_ROMANS[],const int d,const int hasFour,const int hasFourty,const int hasNine,const int hasFourHundred){
-      if (hasFour>0 && ALL_ROMANS[d] == 'I'){
-          *p++='I';
-          *p++='V';
-      }
-      if (hasNine>0 && ALL_ROMANS[d] == 'I'){
-          *p++='I';
-          *p++='X';
-      }
-      if (hasFourty>0 && ALL_ROMANS[d] == 'X'){
-          *p++='X';
-          *p++='L';
-      }
-      if (hasFourHundred>0 && ALL_ROMANS[d] == 'C'){
-          *p++='C';
-          *p++='D';
-      }
-}
-
 static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int frequencyArray[26]){
    static const char ALL_ROMANS[] = "MDCLXVI";
+
+   //Determine Substitutions
    int hasFour = checkForSubtraction(frequencyArray,'I',4);
    int hasFourty = checkForSubtraction(frequencyArray,'X',4);
    int hasFourHundred = checkForSubtraction(frequencyArray,'C',4);
@@ -59,31 +42,52 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int freq
       hasFour=0;
       hasNine++;
    }
+   int hasNinty = 0;  
+   if (hasFourty>0 && frequencyArray[getFrequencyIndex('L')] > 0){
+      frequencyArray[getFrequencyIndex('L')]--;
+      hasFourty=0;
+      hasNinty++;
+   }
+   int hasNineHundred = 0;  
+   if (hasFourHundred>0 && frequencyArray[getFrequencyIndex('D')] > 0){
+      frequencyArray[getFrequencyIndex('D')]--;
+      hasFourHundred=0;
+      hasNineHundred++;
+   }
 
-   char* p=sortedReturnValue;
+
    for (int d=0; ALL_ROMANS[d] != '\0'; d++) {
       for(int i=0; i<frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
-          *p++=ALL_ROMANS[d];
+          *sortedReturnValue++=ALL_ROMANS[d];
       }
-      //appendSubtractions(p,ALL_ROMANS,d,hasFour,hasFourty,hasNine);  
+
+      //write subtractions
       if (hasFour>0 && ALL_ROMANS[d] == 'I'){
-          *p++='I';
-          *p++='V';
+          *sortedReturnValue++='I';
+          *sortedReturnValue++='V';
       }
       if (hasNine>0 && ALL_ROMANS[d] == 'I'){
-          *p++='I';
-          *p++='X';
+          *sortedReturnValue++='I';
+          *sortedReturnValue++='X';
       }
       if (hasFourty>0 && ALL_ROMANS[d] == 'X'){
-          *p++='X';
-          *p++='L';
+          *sortedReturnValue++='X';
+          *sortedReturnValue++='L';
       }
       if (hasFourHundred>0 && ALL_ROMANS[d] == 'C'){
-          *p++='C';
-          *p++='D';
+          *sortedReturnValue++='C';
+          *sortedReturnValue++='D';
+      }
+      if (hasNinty>0 && ALL_ROMANS[d] == 'C'){
+          *sortedReturnValue++='X';
+          *sortedReturnValue++='C';
+      }
+      if (hasNineHundred>0 && ALL_ROMANS[d] == 'M'){
+          *sortedReturnValue++='C';
+          *sortedReturnValue++='M';
       }
    }
-   *p=0;
+   *sortedReturnValue=0;
 }
 
 static void groupRomans(int frequencyArray[26]){
