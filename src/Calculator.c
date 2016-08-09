@@ -193,11 +193,21 @@ static char* removeSubstitutions(const char* val1){
   return expandedValue;
 }
 
-static void subtrctFrequencies(int difference[26] ,int leftNumeral[26] ,int rightNumeral[26] ){
-   static const char ALL_ROMANS[] = "MDCLXVI";
-   for (int d=0; ALL_ROMANS[d] != '\0'; d++) {
-      for (int i=rightNumeral[getFrequencyIndex(ALL_ROMANS[d])]; i < leftNumeral[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
-          difference[getFrequencyIndex(ALL_ROMANS[d])]++;
+static void getMoreNumerals(int arrayToAdjust[26],const char numeralNeeded){
+  if (numeralNeeded == ROMAN_I){
+      arrayToAdjust[getFrequencyIndex(ROMAN_I)]=arrayToAdjust[getFrequencyIndex(ROMAN_I)]+5;
+      arrayToAdjust[getFrequencyIndex(ROMAN_V)]--;
+  }
+}
+
+static void subtractFrequencies(int difference[26] ,int leftNumeral[26] ,int rightNumeral[26] ){
+   static const char ALL_ROMANS_ASSENDING[] = "IVXLCDM";
+   for (int d=0; ALL_ROMANS_ASSENDING[d] != '\0'; d++) {
+      if (leftNumeral[getFrequencyIndex(ALL_ROMANS_ASSENDING[d])]<rightNumeral[getFrequencyIndex(ALL_ROMANS_ASSENDING[d])]){
+          getMoreNumerals(leftNumeral, ALL_ROMANS_ASSENDING[d]);
+      }
+      for (int i=rightNumeral[getFrequencyIndex(ALL_ROMANS_ASSENDING[d])]; i < leftNumeral[getFrequencyIndex(ALL_ROMANS_ASSENDING[d])]; i++ ){
+          difference[getFrequencyIndex(ALL_ROMANS_ASSENDING[d])]++;
       }
     }
 }
@@ -222,7 +232,7 @@ char* subtract(const char* val1, const char* val2){
    determineRomanFrequency(rightNumeral,removeSubstitutions(val2));
 
    int difference[26] = {0};
-   subtrctFrequencies(difference,leftNumeral,rightNumeral);
+   subtractFrequencies(difference,leftNumeral,rightNumeral);
 
    char* returnValue=malloc(calculateLength(difference));
    groupRomans(difference);
