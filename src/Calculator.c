@@ -193,6 +193,11 @@ static char* removeSubstitutions(const char* val1){
   return expandedValue;
 }
 
+static void subtrctFrequencies(int difference[26] ,int leftNumeral[26] ,int rightNumeral[26] ){
+  difference[getFrequencyIndex(ROMAN_I)]++;
+}
+
+
 char* add(const char* val1, const char* val2){
 
   int len =strlen(val1)+strlen(val1)+1;
@@ -206,6 +211,17 @@ char* add(const char* val1, const char* val2){
 }
 
 char* subtract(const char* val1, const char* val2){
+   int leftNumeral[26] = {0};
+   determineRomanFrequency(leftNumeral,removeSubstitutions(val1));
+   int rightNumeral[26] = {0};
+   determineRomanFrequency(leftNumeral,removeSubstitutions(val2));
 
-  return"";
+   int difference[26] = {0};
+   subtrctFrequencies(difference,leftNumeral,rightNumeral);
+
+   char* returnValue=malloc(calculateLength(difference));
+   groupRomans(difference);
+   writeProperlyFormattedRomanNumeral(returnValue,difference);
+  return returnValue;
 }
+
