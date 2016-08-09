@@ -19,7 +19,13 @@ static void concatRomans(char* concatinatedValue, const char* val1, const char* 
 }
 
 static int getFrequencyIndex(char numeral){
-  return numeral - 'A';
+  static const char ALL_ROMANS[] = "MDCLXVI";
+  char theNumeral[2]={numeral,'\0'};
+
+  if (strstr(ALL_ROMANS,(char *)&theNumeral) != NULL){
+    return numeral - 'A';
+  }
+  return 0;
 }
 
 static void determineRomanFrequency(int frequencyArray[26], const char* concatinatedValue){

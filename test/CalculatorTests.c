@@ -68,6 +68,19 @@ START_TEST(test_add_numbers_containing_a_subtraction)
 }
 END_TEST
 
+START_TEST(test_invalid_inputs)
+{
+    //Ignore invalid chars
+    ck_assert_str_eq("II", add("QWERTYI", "I"));
+    //Ignore invalid chars
+    ck_assert_str_eq("II", add("qwerty123456I", "I"));
+    //Ignore empty strings
+    ck_assert_str_eq("I", add("QWERTYI", ""));
+    //Ignore empty strings
+    ck_assert_str_eq("", add("", ""));
+}
+END_TEST
+
 Suite* calculatorTestsSuite(void) {
     Suite * suite = suite_create("Calculator Tests");
     TCase *addRomanTestCase = tcase_create("add");
@@ -79,6 +92,7 @@ Suite* calculatorTestsSuite(void) {
     tcase_add_test(addRomanTestCase, test_add_numbers_resulting_in_need_to_compact_with_subtraction);
     tcase_add_test(addRomanTestCase, test_add_numbers_resulting_in_many_subtractions);
     tcase_add_test(addRomanTestCase, test_add_numbers_containing_a_subtraction);
+    tcase_add_test(addRomanTestCase, test_invalid_inputs);
     suite_add_tcase(suite, addRomanTestCase);
 
     return suite;
