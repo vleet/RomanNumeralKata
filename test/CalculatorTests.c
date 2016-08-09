@@ -87,6 +87,12 @@ START_TEST(test_simple_subtract_2_minus_1)
 }
 END_TEST
 
+START_TEST(test_valud_subtractions_that_do_not_equire_borrowing)
+{
+    ck_assert_str_eq("III", subtract("IV", "I"));
+}
+END_TEST
+
 Suite* calculatorTestsSuite(void) {
     Suite * suite = suite_create("Calculator Tests");
     TCase *addRomanTestCase = tcase_create("add");
@@ -103,6 +109,7 @@ Suite* calculatorTestsSuite(void) {
     
     TCase *subtractRomanTestCase = tcase_create("subtract");
     tcase_add_test(subtractRomanTestCase, test_simple_subtract_2_minus_1);
+    tcase_add_test(subtractRomanTestCase, test_valud_subtractions_that_do_not_equire_borrowing);
     suite_add_tcase(suite, subtractRomanTestCase);
 
     return suite;

@@ -194,7 +194,9 @@ static char* removeSubstitutions(const char* val1){
 }
 
 static void subtrctFrequencies(int difference[26] ,int leftNumeral[26] ,int rightNumeral[26] ){
-  difference[getFrequencyIndex(ROMAN_I)]++;
+      for (int i=rightNumeral[getFrequencyIndex(ROMAN_I)]; i < leftNumeral[getFrequencyIndex(ROMAN_I)]; i++ ){
+          difference[getFrequencyIndex(ROMAN_I)]++;
+      }
 }
 
 
@@ -214,7 +216,7 @@ char* subtract(const char* val1, const char* val2){
    int leftNumeral[26] = {0};
    determineRomanFrequency(leftNumeral,removeSubstitutions(val1));
    int rightNumeral[26] = {0};
-   determineRomanFrequency(leftNumeral,removeSubstitutions(val2));
+   determineRomanFrequency(rightNumeral,removeSubstitutions(val2));
 
    int difference[26] = {0};
    subtrctFrequencies(difference,leftNumeral,rightNumeral);
