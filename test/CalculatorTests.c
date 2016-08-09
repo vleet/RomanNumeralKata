@@ -60,6 +60,11 @@ END_TEST
 START_TEST(test_add_numbers_containing_a_subtraction)
 {
     ck_assert_str_eq("V", add("IV", "I"));
+    ck_assert_str_eq("X", add("IX", "I"));
+    ck_assert_str_eq("L", add("XL", "X"));
+    ck_assert_str_eq("D", add("CD", "C"));
+    ck_assert_str_eq("C", add("XC", "X"));
+    ck_assert_str_eq("M", add("CM", "C"));
 }
 END_TEST
 
