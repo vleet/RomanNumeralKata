@@ -194,9 +194,12 @@ static char* removeSubstitutions(const char* val1){
 }
 
 static void subtrctFrequencies(int difference[26] ,int leftNumeral[26] ,int rightNumeral[26] ){
-      for (int i=rightNumeral[getFrequencyIndex(ROMAN_I)]; i < leftNumeral[getFrequencyIndex(ROMAN_I)]; i++ ){
-          difference[getFrequencyIndex(ROMAN_I)]++;
+   static const char ALL_ROMANS[] = "MDCLXVI";
+   for (int d=0; ALL_ROMANS[d] != '\0'; d++) {
+      for (int i=rightNumeral[getFrequencyIndex(ALL_ROMANS[d])]; i < leftNumeral[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
+          difference[getFrequencyIndex(ALL_ROMANS[d])]++;
       }
+    }
 }
 
 

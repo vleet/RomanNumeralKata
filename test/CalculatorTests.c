@@ -90,6 +90,13 @@ END_TEST
 START_TEST(test_valud_subtractions_that_do_not_equire_borrowing)
 {
     ck_assert_str_eq("III", subtract("IV", "I"));
+    ck_assert_str_eq("VIII", subtract("IX", "I"));
+    ck_assert_str_eq("V", subtract("VV", "V"));
+    ck_assert_str_eq("X", subtract("XXX", "XX"));
+    ck_assert_str_eq("L", subtract("LLL", "LL"));
+    ck_assert_str_eq("C", subtract("CCC", "CC"));
+    ck_assert_str_eq("M", subtract("MM", "M"));
+
 }
 END_TEST
 
