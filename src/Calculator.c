@@ -20,15 +20,28 @@ static int getFrequencyIndex(char numeral){
   return numeral - 'A';
 }
 
-static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, const int frequencyArray[26]){
+static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int frequencyArray[26]){
    static const char ALL_ROMANS[] = "MDCLXVI";
+   int hasFour = 0;
+   if (frequencyArray[getFrequencyIndex('I')] == 4){
+      frequencyArray[getFrequencyIndex('I')]=frequencyArray[getFrequencyIndex('I')]-4;
+      hasFour++;
+   }
+   //determine if IV Subtraction
+   //IV Subtraction Flag
+   //Remove IIII from frequency
+
 
    char* p=sortedReturnValue;
    for (int d=0; ALL_ROMANS[d] != '\0'; d++) {
       for(int i=0; i<frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
           *p++=ALL_ROMANS[d];
       }
-    } 
+      if (hasFour>0 && ALL_ROMANS[d] == 'I'){
+          *p++='I';
+          *p++='V';
+      }
+    }
     *p=0;
 }
 
