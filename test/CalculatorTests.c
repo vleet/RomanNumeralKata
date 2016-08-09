@@ -81,6 +81,12 @@ START_TEST(test_invalid_inputs)
 }
 END_TEST
 
+START_TEST(test_simple_subtract_2_minus_1)
+{
+    ck_assert_str_eq("I", subtract("II", "I"));
+}
+END_TEST
+
 Suite* calculatorTestsSuite(void) {
     Suite * suite = suite_create("Calculator Tests");
     TCase *addRomanTestCase = tcase_create("add");
@@ -94,6 +100,10 @@ Suite* calculatorTestsSuite(void) {
     tcase_add_test(addRomanTestCase, test_add_numbers_containing_a_subtraction);
     tcase_add_test(addRomanTestCase, test_invalid_inputs);
     suite_add_tcase(suite, addRomanTestCase);
+    
+    TCase *subtractRomanTestCase = tcase_create("subtract");
+    tcase_add_test(subtractRomanTestCase, test_simple_subtract_2_minus_1);
+    suite_add_tcase(suite, subtractRomanTestCase);
 
     return suite;
 }

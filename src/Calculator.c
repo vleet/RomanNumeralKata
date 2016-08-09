@@ -204,3 +204,8 @@ char* add(const char* val1, const char* val2){
 
   return sortedReturnValue;
 }
+
+char* subtract(const char* val1, const char* val2){
+
+  return"";
+}
