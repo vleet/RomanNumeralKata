@@ -89,6 +89,15 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int freq
    }
    *sortedReturnValue=0;
 }
+static void writeExpandedRomanNumeral(char* sortedReturnValue, int frequencyArray[26]){
+   static const char ALL_ROMANS[] = "MDCLXVI";
+   for (int d=0; ALL_ROMANS[d] != '\0'; d++) {
+      for(int i=0; i<frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
+          *sortedReturnValue++=ALL_ROMANS[d];
+      }
+   }
+   *sortedReturnValue=0;
+}
 
 static void groupRomans(int frequencyArray[26]){
    if (frequencyArray[getFrequencyIndex('I')]>=5){
@@ -123,12 +132,34 @@ static void sortAndGroupRomans(char* sortedReturnValue, const char* concatinated
    groupRomans(count);
    writeProperlyFormattedRomanNumeral(sortedReturnValue,count);
 }
+static int calculateLength(const int frequencyArray[26]){
+  int len=0;
+     for (int c = 0; c<26; c++) {
+        len = len + frequencyArray[c];
+   }
+   return len;
+}
+
+static char* removeSubstitutions(const char* val1){
+  int frequencyArray[26] = {0};
+  determineRomanFrequency(frequencyArray,val1);
+
+  if (strstr(val1, "IV") != NULL) { 
+    frequencyArray[getFrequencyIndex('I')]=frequencyArray[getFrequencyIndex('I')]+3;
+    frequencyArray[getFrequencyIndex('V')]--;
+  }
+
+  char* expandedValue=malloc(calculateLength(frequencyArray));
+  writeExpandedRomanNumeral(expandedValue,frequencyArray);   
+
+  return expandedValue;
+}
 
 char* add(const char* val1, const char* val2){
 
   int len =strlen(val1)+strlen(val1)+1;
   char* concatinatedValue=malloc(len);
-  concatRomans(concatinatedValue,val1,val2);
+  concatRomans(concatinatedValue,removeSubstitutions(val1),removeSubstitutions(val2));
 
   char* sortedReturnValue=malloc(strlen(concatinatedValue)+1);
   sortAndGroupRomans(sortedReturnValue,concatinatedValue);
