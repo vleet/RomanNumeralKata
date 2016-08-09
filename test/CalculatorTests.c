@@ -57,6 +57,12 @@ START_TEST(test_add_numbers_resulting_in_many_subtractions)
 }
 END_TEST
 
+START_TEST(test_add_numbers_containing_a_subtraction)
+{
+    ck_assert_str_eq("V", add("IV", "I"));
+}
+END_TEST
+
 Suite* calculatorTestsSuite(void) {
     Suite * suite = suite_create("Calculator Tests");
     TCase *addRomanTestCase = tcase_create("add");
@@ -67,6 +73,7 @@ Suite* calculatorTestsSuite(void) {
     tcase_add_test(addRomanTestCase, test_add_numbers_requiring_grouping);
     tcase_add_test(addRomanTestCase, test_add_numbers_resulting_in_need_to_compact_with_subtraction);
     tcase_add_test(addRomanTestCase, test_add_numbers_resulting_in_many_subtractions);
+    tcase_add_test(addRomanTestCase, test_add_numbers_containing_a_subtraction);
     suite_add_tcase(suite, addRomanTestCase);
 
     return suite;
