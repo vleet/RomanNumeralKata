@@ -44,6 +44,7 @@ START_TEST(test_add_numbers_resulting_in_need_to_compact_with_subtraction)
     ck_assert_str_eq("IV", add("II", "II"));
     ck_assert_str_eq("IX", add("VII", "II"));
     ck_assert_str_eq("XL", add("XX", "XX"));
+    ck_assert_str_eq("CD", add("CC", "CC"));
 }
 END_TEST
 
