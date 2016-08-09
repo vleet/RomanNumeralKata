@@ -148,6 +148,29 @@ static char* removeSubstitutions(const char* val1){
     frequencyArray[getFrequencyIndex('I')]=frequencyArray[getFrequencyIndex('I')]+3;
     frequencyArray[getFrequencyIndex('V')]--;
   }
+  if (strstr(val1, "IX") != NULL) { 
+    frequencyArray[getFrequencyIndex('I')]=frequencyArray[getFrequencyIndex('I')]+3;
+    frequencyArray[getFrequencyIndex('V')]++;
+    frequencyArray[getFrequencyIndex('X')]--;
+  }
+  if (strstr(val1, "XL") != NULL) { 
+    frequencyArray[getFrequencyIndex('X')]=frequencyArray[getFrequencyIndex('X')]+3;
+    frequencyArray[getFrequencyIndex('L')]--;
+  }
+  if (strstr(val1, "CD") != NULL) { 
+    frequencyArray[getFrequencyIndex('C')]=frequencyArray[getFrequencyIndex('C')]+3;
+    frequencyArray[getFrequencyIndex('D')]--;
+  }
+  if (strstr(val1, "XC") != NULL) { 
+    frequencyArray[getFrequencyIndex('X')]=frequencyArray[getFrequencyIndex('X')]+3;
+    frequencyArray[getFrequencyIndex('L')]++;
+    frequencyArray[getFrequencyIndex('C')]--;
+  }
+  if (strstr(val1, "CM") != NULL) { 
+    frequencyArray[getFrequencyIndex('C')]=frequencyArray[getFrequencyIndex('C')]+3;
+    frequencyArray[getFrequencyIndex('D')]++;
+    frequencyArray[getFrequencyIndex('M')]--;
+  }
 
   char* expandedValue=malloc(calculateLength(frequencyArray));
   writeExpandedRomanNumeral(expandedValue,frequencyArray);   
