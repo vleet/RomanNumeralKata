@@ -4,21 +4,30 @@
 #include <ctype.h>
 #include <stdbool.h>
 
+#define ROMAN_M  'M'
+#define ROMAN_D  'D'
+#define ROMAN_C  'C'
+#define ROMAN_L  'L'
+#define ROMAN_X  'X'
+#define ROMAN_V  'V'
+#define ROMAN_I  'I'
+
 static void concatRomans(char* concatinatedValue, const char* val1, const char* val2){
   //Concatinate
   strcpy(concatinatedValue,val1);
   strcat(concatinatedValue,val2);
 }
 
-static void determineRomanFrequency(int frequencyArray[26], const char* concatinatedValue){
-   for (int c = 0; concatinatedValue[c] != '\0'; c++) {
-      frequencyArray[concatinatedValue[c]-'A']++;
-   }
- }
-
 static int getFrequencyIndex(char numeral){
   return numeral - 'A';
 }
+
+static void determineRomanFrequency(int frequencyArray[26], const char* concatinatedValue){
+   for (int c = 0; concatinatedValue[c] != '\0'; c++) {
+      frequencyArray[getFrequencyIndex(concatinatedValue[c])]++;
+   }
+ }
+
 
 static int checkForSubtraction(int frequencyArray[26], char numeral, int group){
    int isSubtraction = 0;
@@ -33,24 +42,24 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int freq
    static const char ALL_ROMANS[] = "MDCLXVI";
 
    //Determine Substitutions
-   int hasFour = checkForSubtraction(frequencyArray,'I',4);
-   int hasFourty = checkForSubtraction(frequencyArray,'X',4);
-   int hasFourHundred = checkForSubtraction(frequencyArray,'C',4);
+   int hasFour = checkForSubtraction(frequencyArray,ROMAN_I,4);
+   int hasFourty = checkForSubtraction(frequencyArray,ROMAN_X,4);
+   int hasFourHundred = checkForSubtraction(frequencyArray,ROMAN_C,4);
    int hasNine = 0;  
-   if (hasFour>0 && frequencyArray[getFrequencyIndex('V')] > 0){
-      frequencyArray[getFrequencyIndex('V')]--;
+   if (hasFour>0 && frequencyArray[getFrequencyIndex(ROMAN_V)] > 0){
+      frequencyArray[getFrequencyIndex(ROMAN_V)]--;
       hasFour=0;
       hasNine++;
    }
    int hasNinty = 0;  
-   if (hasFourty>0 && frequencyArray[getFrequencyIndex('L')] > 0){
-      frequencyArray[getFrequencyIndex('L')]--;
+   if (hasFourty>0 && frequencyArray[getFrequencyIndex(ROMAN_L)] > 0){
+      frequencyArray[getFrequencyIndex(ROMAN_L)]--;
       hasFourty=0;
       hasNinty++;
    }
    int hasNineHundred = 0;  
-   if (hasFourHundred>0 && frequencyArray[getFrequencyIndex('D')] > 0){
-      frequencyArray[getFrequencyIndex('D')]--;
+   if (hasFourHundred>0 && frequencyArray[getFrequencyIndex(ROMAN_D)] > 0){
+      frequencyArray[getFrequencyIndex(ROMAN_D)]--;
       hasFourHundred=0;
       hasNineHundred++;
    }
@@ -62,29 +71,29 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int freq
       }
 
       //write subtractions
-      if (hasFour>0 && ALL_ROMANS[d] == 'I'){
-          *sortedReturnValue++='I';
-          *sortedReturnValue++='V';
+      if (hasFour>0 && ALL_ROMANS[d] == ROMAN_I){
+          *sortedReturnValue++=ROMAN_I;
+          *sortedReturnValue++=ROMAN_V;
       }
-      if (hasNine>0 && ALL_ROMANS[d] == 'I'){
-          *sortedReturnValue++='I';
-          *sortedReturnValue++='X';
+      if (hasNine>0 && ALL_ROMANS[d] == ROMAN_I){
+          *sortedReturnValue++=ROMAN_I;
+          *sortedReturnValue++=ROMAN_X;
       }
-      if (hasFourty>0 && ALL_ROMANS[d] == 'X'){
-          *sortedReturnValue++='X';
-          *sortedReturnValue++='L';
+      if (hasFourty>0 && ALL_ROMANS[d] == ROMAN_X){
+          *sortedReturnValue++=ROMAN_X;
+          *sortedReturnValue++=ROMAN_L;
       }
-      if (hasFourHundred>0 && ALL_ROMANS[d] == 'C'){
-          *sortedReturnValue++='C';
-          *sortedReturnValue++='D';
+      if (hasFourHundred>0 && ALL_ROMANS[d] == ROMAN_C){
+          *sortedReturnValue++=ROMAN_C;
+          *sortedReturnValue++=ROMAN_D;
       }
-      if (hasNinty>0 && ALL_ROMANS[d] == 'C'){
-          *sortedReturnValue++='X';
-          *sortedReturnValue++='C';
+      if (hasNinty>0 && ALL_ROMANS[d] == ROMAN_C){
+          *sortedReturnValue++=ROMAN_X;
+          *sortedReturnValue++=ROMAN_C;
       }
-      if (hasNineHundred>0 && ALL_ROMANS[d] == 'M'){
-          *sortedReturnValue++='C';
-          *sortedReturnValue++='M';
+      if (hasNineHundred>0 && ALL_ROMANS[d] == ROMAN_M){
+          *sortedReturnValue++=ROMAN_C;
+          *sortedReturnValue++=ROMAN_M;
       }
    }
    *sortedReturnValue=0;
@@ -100,29 +109,29 @@ static void writeExpandedRomanNumeral(char* sortedReturnValue, int frequencyArra
 }
 
 static void groupRomans(int frequencyArray[26]){
-   if (frequencyArray[getFrequencyIndex('I')]>=5){
-      frequencyArray[getFrequencyIndex('I')]=frequencyArray[getFrequencyIndex('I')]-5;
-      frequencyArray[getFrequencyIndex('V')]++;
+   if (frequencyArray[getFrequencyIndex(ROMAN_I)]>=5){
+      frequencyArray[getFrequencyIndex(ROMAN_I)]=frequencyArray[getFrequencyIndex(ROMAN_I)]-5;
+      frequencyArray[getFrequencyIndex(ROMAN_V)]++;
    }
-   if (frequencyArray[getFrequencyIndex('V')]>=2){
-      frequencyArray[getFrequencyIndex('V')]=frequencyArray[getFrequencyIndex('V')]-2;
-      frequencyArray[getFrequencyIndex('X')]++;
+   if (frequencyArray[getFrequencyIndex(ROMAN_V)]>=2){
+      frequencyArray[getFrequencyIndex(ROMAN_V)]=frequencyArray[getFrequencyIndex(ROMAN_V)]-2;
+      frequencyArray[getFrequencyIndex(ROMAN_X)]++;
    }
-   if (frequencyArray[getFrequencyIndex('X')]>=5){
-      frequencyArray[getFrequencyIndex('X')]=frequencyArray[getFrequencyIndex('X')]-5;
-      frequencyArray[getFrequencyIndex('L')]++;
+   if (frequencyArray[getFrequencyIndex(ROMAN_X)]>=5){
+      frequencyArray[getFrequencyIndex(ROMAN_X)]=frequencyArray[getFrequencyIndex(ROMAN_X)]-5;
+      frequencyArray[getFrequencyIndex(ROMAN_L)]++;
    }
-   if (frequencyArray[getFrequencyIndex('L')]>=2){
-      frequencyArray[getFrequencyIndex('L')]=frequencyArray[getFrequencyIndex('L')]-2;
-      frequencyArray[getFrequencyIndex('C')]++;
+   if (frequencyArray[getFrequencyIndex(ROMAN_L)]>=2){
+      frequencyArray[getFrequencyIndex(ROMAN_L)]=frequencyArray[getFrequencyIndex(ROMAN_L)]-2;
+      frequencyArray[getFrequencyIndex(ROMAN_C)]++;
    }
-   if (frequencyArray[getFrequencyIndex('C')]>=5){
-      frequencyArray[getFrequencyIndex('C')]=frequencyArray[getFrequencyIndex('C')]-5;
-      frequencyArray[getFrequencyIndex('D')]++;
+   if (frequencyArray[getFrequencyIndex(ROMAN_C)]>=5){
+      frequencyArray[getFrequencyIndex(ROMAN_C)]=frequencyArray[getFrequencyIndex(ROMAN_C)]-5;
+      frequencyArray[getFrequencyIndex(ROMAN_D)]++;
    }
-   if (frequencyArray[getFrequencyIndex('D')]>=2){
-      frequencyArray[getFrequencyIndex('D')]=frequencyArray[getFrequencyIndex('D')]-2;
-      frequencyArray[getFrequencyIndex('M')]++;
+   if (frequencyArray[getFrequencyIndex(ROMAN_D)]>=2){
+      frequencyArray[getFrequencyIndex(ROMAN_D)]=frequencyArray[getFrequencyIndex(ROMAN_D)]-2;
+      frequencyArray[getFrequencyIndex(ROMAN_M)]++;
    }
 }
 
@@ -145,31 +154,31 @@ static char* removeSubstitutions(const char* val1){
   determineRomanFrequency(frequencyArray,val1);
 
   if (strstr(val1, "IV") != NULL) { 
-    frequencyArray[getFrequencyIndex('I')]=frequencyArray[getFrequencyIndex('I')]+3;
-    frequencyArray[getFrequencyIndex('V')]--;
+    frequencyArray[getFrequencyIndex(ROMAN_I)]=frequencyArray[getFrequencyIndex(ROMAN_I)]+3;
+    frequencyArray[getFrequencyIndex(ROMAN_V)]--;
   }
   if (strstr(val1, "IX") != NULL) { 
-    frequencyArray[getFrequencyIndex('I')]=frequencyArray[getFrequencyIndex('I')]+3;
+    frequencyArray[getFrequencyIndex(ROMAN_I)]=frequencyArray[getFrequencyIndex(ROMAN_I)]+3;
     frequencyArray[getFrequencyIndex('V')]++;
     frequencyArray[getFrequencyIndex('X')]--;
   }
   if (strstr(val1, "XL") != NULL) { 
-    frequencyArray[getFrequencyIndex('X')]=frequencyArray[getFrequencyIndex('X')]+3;
-    frequencyArray[getFrequencyIndex('L')]--;
+    frequencyArray[getFrequencyIndex(ROMAN_X)]=frequencyArray[getFrequencyIndex(ROMAN_X)]+3;
+    frequencyArray[getFrequencyIndex(ROMAN_L)]--;
   }
   if (strstr(val1, "CD") != NULL) { 
-    frequencyArray[getFrequencyIndex('C')]=frequencyArray[getFrequencyIndex('C')]+3;
-    frequencyArray[getFrequencyIndex('D')]--;
+    frequencyArray[getFrequencyIndex(ROMAN_C)]=frequencyArray[getFrequencyIndex(ROMAN_C)]+3;
+    frequencyArray[getFrequencyIndex(ROMAN_D)]--;
   }
   if (strstr(val1, "XC") != NULL) { 
-    frequencyArray[getFrequencyIndex('X')]=frequencyArray[getFrequencyIndex('X')]+3;
-    frequencyArray[getFrequencyIndex('L')]++;
-    frequencyArray[getFrequencyIndex('C')]--;
+    frequencyArray[getFrequencyIndex(ROMAN_X)]=frequencyArray[getFrequencyIndex(ROMAN_X)]+3;
+    frequencyArray[getFrequencyIndex(ROMAN_L)]++;
+    frequencyArray[getFrequencyIndex(ROMAN_C)]--;
   }
   if (strstr(val1, "CM") != NULL) { 
-    frequencyArray[getFrequencyIndex('C')]=frequencyArray[getFrequencyIndex('C')]+3;
-    frequencyArray[getFrequencyIndex('D')]++;
-    frequencyArray[getFrequencyIndex('M')]--;
+    frequencyArray[getFrequencyIndex(ROMAN_C)]=frequencyArray[getFrequencyIndex(ROMAN_C)]+3;
+    frequencyArray[getFrequencyIndex(ROMAN_D)]++;
+    frequencyArray[getFrequencyIndex(ROMAN_M)]--;
   }
 
   char* expandedValue=malloc(calculateLength(frequencyArray));
