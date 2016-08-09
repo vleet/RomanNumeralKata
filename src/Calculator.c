@@ -27,10 +27,6 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int freq
       frequencyArray[getFrequencyIndex('I')]=frequencyArray[getFrequencyIndex('I')]-4;
       hasFour++;
    }
-   //determine if IV Subtraction
-   //IV Subtraction Flag
-   //Remove IIII from frequency
-
 
    char* p=sortedReturnValue;
    for (int d=0; ALL_ROMANS[d] != '\0'; d++) {
