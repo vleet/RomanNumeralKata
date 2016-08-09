@@ -103,6 +103,7 @@ END_TEST
 START_TEST(test_subtractions_that_require_borrowing)
 {
     ck_assert_str_eq("IV", subtract("V", "I"));
+    ck_assert_str_eq("IX", subtract("X", "I"));
 }
 
 END_TEST

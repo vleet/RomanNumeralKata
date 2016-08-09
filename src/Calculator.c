@@ -195,8 +195,18 @@ static char* removeSubstitutions(const char* val1){
 
 static void getMoreNumerals(int arrayToAdjust[26],const char numeralNeeded){
   if (numeralNeeded == ROMAN_I){
+      if (arrayToAdjust[getFrequencyIndex(ROMAN_V)] == 0){
+         getMoreNumerals(arrayToAdjust,getFrequencyIndex(ROMAN_V));
+      }
       arrayToAdjust[getFrequencyIndex(ROMAN_I)]=arrayToAdjust[getFrequencyIndex(ROMAN_I)]+5;
       arrayToAdjust[getFrequencyIndex(ROMAN_V)]--;
+  }
+  if (numeralNeeded == ROMAN_V){
+      if (arrayToAdjust[getFrequencyIndex(ROMAN_X)] == 0){
+         getMoreNumerals(arrayToAdjust,getFrequencyIndex(ROMAN_X));
+      }
+      arrayToAdjust[getFrequencyIndex(ROMAN_V)]=arrayToAdjust[getFrequencyIndex(ROMAN_V)]+2;
+      arrayToAdjust[getFrequencyIndex(ROMAN_X)]--;
   }
 }
 
