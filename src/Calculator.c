@@ -24,6 +24,7 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int freq
    static const char ALL_ROMANS[] = "MDCLXVI";
    int hasFour = 0;
    int hasNine = 0;
+   int hasFourty = 0;
    if (frequencyArray[getFrequencyIndex('I')] == 4){
       frequencyArray[getFrequencyIndex('I')]=frequencyArray[getFrequencyIndex('I')]-4;
       hasFour++;
@@ -32,6 +33,10 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int freq
       frequencyArray[getFrequencyIndex('V')]--;
       hasFour=0;
       hasNine++;
+   }
+   if (frequencyArray[getFrequencyIndex('X')] == 4){
+      frequencyArray[getFrequencyIndex('X')]=frequencyArray[getFrequencyIndex('X')]-4;
+      hasFourty++;
    }
 
    char* p=sortedReturnValue;
@@ -46,6 +51,10 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int freq
       if (hasNine>0 && ALL_ROMANS[d] == 'I'){
           *p++='I';
           *p++='X';
+      }
+      if (hasFourty>0 && ALL_ROMANS[d] == 'X'){
+          *p++='X';
+          *p++='L';
       }
     }
     *p=0;
