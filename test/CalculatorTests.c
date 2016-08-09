@@ -104,6 +104,10 @@ START_TEST(test_subtractions_that_require_borrowing)
 {
     ck_assert_str_eq("IV", subtract("V", "I"));
     ck_assert_str_eq("IX", subtract("X", "I"));
+    ck_assert_str_eq("XXX", subtract("LX", "XXX"));
+    ck_assert_str_eq("XC", subtract("C", "X"));
+    ck_assert_str_eq("CDXC", subtract("D", "X"));
+    ck_assert_str_eq("MCMXCIX", subtract("MM", "I"));
 }
 
 END_TEST
