@@ -47,6 +47,11 @@ static int checkForSubtraction(int frequencyArray[26], char numeral, int group){
 static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int frequencyArray[26]){
    static const char ALL_ROMANS[] = "MDCLXVI";
 
+   if(frequencyArray[getFrequencyIndex(ROMAN_M)] > 3){ 
+    *sortedReturnValue++='\0';
+    return;
+   }
+
    //Determine Substitutions
    int hasFour = checkForSubtraction(frequencyArray,ROMAN_I,4);
    int hasFourty = checkForSubtraction(frequencyArray,ROMAN_X,4);

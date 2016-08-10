@@ -81,6 +81,12 @@ START_TEST(test_invalid_inputs)
 }
 END_TEST
 
+START_TEST(test_max_roman)
+{
+    ck_assert_str_eq("", add("MMMCMXCIX", "I"));
+    ck_assert_str_eq("", add("MM", "MM"));
+}
+END_TEST
 START_TEST(test_simple_subtract_2_minus_1)
 {
     ck_assert_str_eq("I", subtract("II", "I"));
@@ -137,6 +143,7 @@ Suite* calculatorTestsSuite(void) {
     tcase_add_test(addRomanTestCase, test_add_numbers_resulting_in_many_subtractions);
     tcase_add_test(addRomanTestCase, test_add_numbers_containing_a_subtraction);
     tcase_add_test(addRomanTestCase, test_invalid_inputs);
+    tcase_add_test(addRomanTestCase, test_max_roman);
     suite_add_tcase(suite, addRomanTestCase);
     
     TCase *subtractRomanTestCase = tcase_create("subtract");
