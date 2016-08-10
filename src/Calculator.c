@@ -3,14 +3,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdbool.h>
-
-#define ROMAN_M  'M'
-#define ROMAN_D  'D'
-#define ROMAN_C  'C'
-#define ROMAN_L  'L'
-#define ROMAN_X  'X'
-#define ROMAN_V  'V'
-#define ROMAN_I  'I'
+#include "globals.h"
 
 static void concatRomans(char* concatinatedValue, const char* val1, const char* val2){
   //Concatinate
