@@ -5,6 +5,9 @@
 #include <stdbool.h>
 #include "globals.h"
 
+static const char ALL_ROMANS[] = "MDCLXVI";
+static const char ALL_ROMANS_ASSENDING[] = "IVXLCDM";
+
 static void concatRomans(char* concatinatedValue, const char* val1, const char* val2){
   //Concatinate
   strcpy(concatinatedValue,val1);
@@ -12,7 +15,6 @@ static void concatRomans(char* concatinatedValue, const char* val1, const char* 
 }
 
 static int getFrequencyIndex(char numeral){
-  static const char ALL_ROMANS[] = "MDCLXVI";
   char theNumeral[2]={numeral,'\0'};
 
   if (strstr(ALL_ROMANS,(char *)&theNumeral) != NULL){
@@ -38,7 +40,6 @@ static int checkForSubtraction(int frequencyArray[26], char numeral, int group){
 }
 
 static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int frequencyArray[26]){
-   static const char ALL_ROMANS[] = "MDCLXVI";
 
    if(frequencyArray[getFrequencyIndex(ROMAN_M)] > 3){ 
     *sortedReturnValue++='\0';
@@ -103,7 +104,6 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int freq
    *sortedReturnValue=0;
 }
 static void writeExpandedRomanNumeral(char* sortedReturnValue, int frequencyArray[26]){
-   static const char ALL_ROMANS[] = "MDCLXVI";
    for (int d=0; ALL_ROMANS[d] != '\0'; d++) {
       for(int i=0; i<frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
           *sortedReturnValue++=ALL_ROMANS[d];
@@ -234,7 +234,6 @@ static void getMoreNumerals(int arrayToAdjust[26],const char numeralNeeded){
 }
 
 static void subtractFrequencies(int difference[26] ,int leftNumeral[26] ,int rightNumeral[26] ){
-   static const char ALL_ROMANS_ASSENDING[] = "IVXLCDM";
    for (int d=0; ALL_ROMANS_ASSENDING[d] != '\0'; d++) {
       if (leftNumeral[getFrequencyIndex(ALL_ROMANS_ASSENDING[d])]<rightNumeral[getFrequencyIndex(ALL_ROMANS_ASSENDING[d])]){
           getMoreNumerals(leftNumeral, ALL_ROMANS_ASSENDING[d]);
@@ -246,7 +245,6 @@ static void subtractFrequencies(int difference[26] ,int leftNumeral[26] ,int rig
 }
 
 static int wouldProduceNegativeResult(const int left[], const int right[]){
-   static const char ALL_ROMANS[] = "MDCLXVI";
    for (int d=0; ALL_ROMANS[d] != '\0'; d++) {
        if (right[getFrequencyIndex(ALL_ROMANS[d])] < left[getFrequencyIndex(ALL_ROMANS[d])]){
           return 0;
