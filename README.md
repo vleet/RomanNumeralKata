@@ -1,3 +1,8 @@
+#Roman Numeral Calculator Usage Notes
+- Invalid results, like zero, are returned as as ""
+- Invalid Numerals are ignored
+- Negitative results will return ""
+
 #Roman Numeral Calculator
 
 For this Kata, you will be creating a library which will allow the addition and subtraction of
