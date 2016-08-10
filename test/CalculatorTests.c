@@ -109,6 +109,19 @@ START_TEST(test_subtractions_that_require_borrowing)
     ck_assert_str_eq("CDXC", subtract("D", "X"));
     ck_assert_str_eq("MCMXCIX", subtract("MM", "I"));
 }
+END_TEST
+
+START_TEST(test_invalid_subtractions)
+{
+    //ignore negative results
+    ck_assert_str_eq("", subtract("I", "V"));
+    ck_assert_str_eq("", subtract("", "V"));
+    ck_assert_str_eq("", subtract("MMM", "MMMC"));
+
+    //treat empty strings as 0
+    ck_assert_str_eq("I", subtract("I", ""));
+
+}
 
 END_TEST
 
@@ -130,6 +143,7 @@ Suite* calculatorTestsSuite(void) {
     tcase_add_test(subtractRomanTestCase, test_simple_subtract_2_minus_1);
     tcase_add_test(subtractRomanTestCase, test_valud_subtractions_that_do_not_equire_borrowing);
     tcase_add_test(subtractRomanTestCase, test_subtractions_that_require_borrowing);
+    tcase_add_test(subtractRomanTestCase, test_invalid_subtractions);
     suite_add_tcase(suite, subtractRomanTestCase);
 
     return suite;

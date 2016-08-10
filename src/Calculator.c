@@ -247,6 +247,19 @@ static void subtractFrequencies(int difference[26] ,int leftNumeral[26] ,int rig
     }
 }
 
+static int wouldProduceNegativeResult(const int left[], const int right[]){
+   static const char ALL_ROMANS[] = "MDCLXVI";
+   for (int d=0; ALL_ROMANS[d] != '\0'; d++) {
+       if (right[getFrequencyIndex(ALL_ROMANS[d])] < left[getFrequencyIndex(ALL_ROMANS[d])]){
+          return 0;
+       }
+       if (right[getFrequencyIndex(ALL_ROMANS[d])] > left[getFrequencyIndex(ALL_ROMANS[d])]){
+          return 1;
+       }
+    }
+    return 1;
+}
+
 
 char* add(const char* val1, const char* val2){
 
@@ -265,6 +278,10 @@ char* subtract(const char* val1, const char* val2){
    determineRomanFrequency(leftNumeral,removeSubstitutions(val1));
    int rightNumeral[26] = {0};
    determineRomanFrequency(rightNumeral,removeSubstitutions(val2));
+
+   if (wouldProduceNegativeResult(leftNumeral,rightNumeral) != 0) {
+        return "";
+   }
 
    int difference[26] = {0};
    subtractFrequencies(difference,leftNumeral,rightNumeral);
