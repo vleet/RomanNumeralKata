@@ -5,7 +5,8 @@
 #include <stdbool.h>
 #include "globals.h"
 
-static const char ALL_ROMANS[] = "MDCLXVI";
+//static const char ALL_ROMANS[] = "MDCLXVI";
+static const char ALL_ROMANS[7] = {'M','D','C','L','X','V','I'};
 static const char ALL_ROMANS_ASSENDING[] = "IVXLCDM";
 
 static void concatRomans(char* concatinatedValue, const char* val1, const char* val2){
@@ -70,7 +71,7 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int freq
    }
 
 
-   for (int d=0; ALL_ROMANS[d] != '\0'; d++) {
+   for (int d=0; d < sizeof(ALL_ROMANS); d++) {
       for(int i=0; i<frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
           *sortedReturnValue++=ALL_ROMANS[d];
       }
@@ -104,7 +105,7 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int freq
    *sortedReturnValue=0;
 }
 static void writeExpandedRomanNumeral(char* sortedReturnValue, int frequencyArray[26]){
-   for (int d=0; ALL_ROMANS[d] != '\0'; d++) {
+   for (int d=0; d < sizeof(ALL_ROMANS); d++) {
       for(int i=0; i<frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
           *sortedReturnValue++=ALL_ROMANS[d];
       }
@@ -245,7 +246,7 @@ static void subtractFrequencies(int difference[26] ,int leftNumeral[26] ,int rig
 }
 
 static int wouldProduceNegativeResult(const int left[], const int right[]){
-   for (int d=0; ALL_ROMANS[d] != '\0'; d++) {
+   for (int d=0; d < sizeof(ALL_ROMANS); d++) {
        if (right[getFrequencyIndex(ALL_ROMANS[d])] < left[getFrequencyIndex(ALL_ROMANS[d])]){
           return 0;
        }
