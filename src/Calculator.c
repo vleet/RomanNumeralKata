@@ -7,6 +7,8 @@
 
 //static const char ALL_ROMANS[] = "MDCLXVI";
 static const char ALL_ROMANS[7] = {'M','D','C','L','X','V','I'};
+static const int ROMAN_MULTIPLIERS[7] = {99,2,5,2,5,2,5};
+
 static const char ALL_ROMANS_ASSENDING[] = "IVXLCDM";
 
 static void concatRomans(char* concatinatedValue, const char* val1, const char* val2){
@@ -113,33 +115,14 @@ static void writeExpandedRomanNumeral(char* sortedReturnValue, int frequencyArra
    *sortedReturnValue=0;
 }
 
-static void groupRomans(int frequencyArray[26]){
-   if (frequencyArray[getFrequencyIndex(ROMAN_I)]>=5){
-      frequencyArray[getFrequencyIndex(ROMAN_I)]=frequencyArray[getFrequencyIndex(ROMAN_I)]-5;
-      frequencyArray[getFrequencyIndex(ROMAN_V)]++;
-   }
-   if (frequencyArray[getFrequencyIndex(ROMAN_V)]>=2){
-      frequencyArray[getFrequencyIndex(ROMAN_V)]=frequencyArray[getFrequencyIndex(ROMAN_V)]-2;
-      frequencyArray[getFrequencyIndex(ROMAN_X)]++;
-   }
-   if (frequencyArray[getFrequencyIndex(ROMAN_X)]>=5){
-      frequencyArray[getFrequencyIndex(ROMAN_X)]=frequencyArray[getFrequencyIndex(ROMAN_X)]-5;
-      frequencyArray[getFrequencyIndex(ROMAN_L)]++;
-   }
-   if (frequencyArray[getFrequencyIndex(ROMAN_L)]>=2){
-      frequencyArray[getFrequencyIndex(ROMAN_L)]=frequencyArray[getFrequencyIndex(ROMAN_L)]-2;
-      frequencyArray[getFrequencyIndex(ROMAN_C)]++;
-   }
-   if (frequencyArray[getFrequencyIndex(ROMAN_C)]>=5){
-      frequencyArray[getFrequencyIndex(ROMAN_C)]=frequencyArray[getFrequencyIndex(ROMAN_C)]-5;
-      frequencyArray[getFrequencyIndex(ROMAN_D)]++;
-   }
-   if (frequencyArray[getFrequencyIndex(ROMAN_D)]>=2){
-      frequencyArray[getFrequencyIndex(ROMAN_D)]=frequencyArray[getFrequencyIndex(ROMAN_D)]-2;
-      frequencyArray[getFrequencyIndex(ROMAN_M)]++;
-   }
+static void groupRomans (int frequencyArray[26]){
+ for (int d=sizeof(ALL_ROMANS)-1; d >= 0; d--) {
+     if (frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]>=ROMAN_MULTIPLIERS[d]){
+          frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]=frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]-ROMAN_MULTIPLIERS[d];
+          frequencyArray[getFrequencyIndex(ALL_ROMANS[d-1])]++;
+     }
+  }   
 }
-
 static void sortAndGroupRomans(char* sortedReturnValue, const char* concatinatedValue){
    int count[26] = {0};
    determineRomanFrequency(count,concatinatedValue);
