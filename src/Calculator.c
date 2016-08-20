@@ -218,12 +218,12 @@ static void getMoreNumerals(int arrayToAdjust[26],const char numeralNeeded){
 }
 
 static void subtractFrequencies(int difference[26] ,int leftNumeral[26] ,int rightNumeral[26] ){
-   for (int d=0; ALL_ROMANS_ASSENDING[d] != '\0'; d++) {
-      if (leftNumeral[getFrequencyIndex(ALL_ROMANS_ASSENDING[d])]<rightNumeral[getFrequencyIndex(ALL_ROMANS_ASSENDING[d])]){
-          getMoreNumerals(leftNumeral, ALL_ROMANS_ASSENDING[d]);
+    for (int d=sizeof(ALL_ROMANS)-1; d >= 0; d--) {
+      if (leftNumeral[getFrequencyIndex(ALL_ROMANS[d])]<rightNumeral[getFrequencyIndex(ALL_ROMANS[d])]){
+          getMoreNumerals(leftNumeral, ALL_ROMANS[d]);
       }
-      for (int i=rightNumeral[getFrequencyIndex(ALL_ROMANS_ASSENDING[d])]; i < leftNumeral[getFrequencyIndex(ALL_ROMANS_ASSENDING[d])]; i++ ){
-          difference[getFrequencyIndex(ALL_ROMANS_ASSENDING[d])]++;
+      for (int i=rightNumeral[getFrequencyIndex(ALL_ROMANS[d])]; i < leftNumeral[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
+          difference[getFrequencyIndex(ALL_ROMANS[d])]++;
       }
     }
 }
