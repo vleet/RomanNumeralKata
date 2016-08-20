@@ -5,11 +5,9 @@
 #include <stdbool.h>
 #include "globals.h"
 
-//static const char ALL_ROMANS[] = "MDCLXVI";
 static const char ALL_ROMANS[7] = {'M','D','C','L','X','V','I'};
 static const int ROMAN_MULTIPLIERS[7] = {99,2,5,2,5,2,5};
-
-static const char ALL_ROMANS_ASSENDING[] = "IVXLCDM";
+static const int FREQUENCY_SIZE = sizeof(ALL_ROMANS)+1;
 
 static void concatRomans(char* concatinatedValue, const char* val1, const char* val2){
   //Concatinate
@@ -20,20 +18,23 @@ static void concatRomans(char* concatinatedValue, const char* val1, const char* 
 static int getFrequencyIndex(char numeral){
   char theNumeral[2]={numeral,'\0'};
 
-  if (strstr(ALL_ROMANS,(char *)&theNumeral) != NULL){
-    return numeral - 'A';
+  for (int d=0; d < sizeof(ALL_ROMANS); d++) {
+     if (ALL_ROMANS[d] == numeral){
+        return d;
+     }
   }
-  return 0;
+
+  return sizeof(ALL_ROMANS);
 }
 
-static void determineRomanFrequency(int frequencyArray[26], const char* concatinatedValue){
+static void determineRomanFrequency(int frequencyArray[FREQUENCY_SIZE], const char* concatinatedValue){
    for (int c = 0; concatinatedValue[c] != '\0'; c++) {
       frequencyArray[getFrequencyIndex(concatinatedValue[c])]++;
    }
  }
 
 
-static int checkForSubtraction(int frequencyArray[26], char numeral, int group){
+static int checkForSubtraction(int frequencyArray[FREQUENCY_SIZE], char numeral, int group){
    int isSubtraction = 0;
    if (frequencyArray[getFrequencyIndex(numeral)] == group){
       frequencyArray[getFrequencyIndex(numeral)]=frequencyArray[getFrequencyIndex(numeral)]-group;
@@ -42,7 +43,7 @@ static int checkForSubtraction(int frequencyArray[26], char numeral, int group){
    return isSubtraction;
 }
 
-static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int frequencyArray[26]){
+static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int frequencyArray[FREQUENCY_SIZE]){
 
    if(frequencyArray[getFrequencyIndex(ROMAN_M)] > 3){ 
     *sortedReturnValue++='\0';
@@ -106,7 +107,7 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int freq
    }
    *sortedReturnValue=0;
 }
-static void writeExpandedRomanNumeral(char* sortedReturnValue, int frequencyArray[26]){
+static void writeExpandedRomanNumeral(char* sortedReturnValue, int frequencyArray[FREQUENCY_SIZE]){
    for (int d=0; d < sizeof(ALL_ROMANS); d++) {
       for(int i=0; i<frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
           *sortedReturnValue++=ALL_ROMANS[d];
@@ -175,7 +176,7 @@ static char* removeSubstitutions(const char* val1){
   return expandedValue;
 }
 
-static void getMoreNumerals(int arrayToAdjust[26],const char numeralNeeded){
+static void getMoreNumerals(int arrayToAdjust[FREQUENCY_SIZE],const char numeralNeeded){
   if (numeralNeeded == ROMAN_I){
       if (arrayToAdjust[getFrequencyIndex(ROMAN_V)] == 0){
          getMoreNumerals(arrayToAdjust,getFrequencyIndex(ROMAN_V));
@@ -217,7 +218,7 @@ static void getMoreNumerals(int arrayToAdjust[26],const char numeralNeeded){
   }
 }
 
-static void subtractFrequencies(int difference[26] ,int leftNumeral[26] ,int rightNumeral[26] ){
+static void subtractFrequencies(int difference[FREQUENCY_SIZE] ,int leftNumeral[FREQUENCY_SIZE] ,int rightNumeral[FREQUENCY_SIZE] ){
     for (int d=sizeof(ALL_ROMANS)-1; d >= 0; d--) {
       if (leftNumeral[getFrequencyIndex(ALL_ROMANS[d])]<rightNumeral[getFrequencyIndex(ALL_ROMANS[d])]){
           getMoreNumerals(leftNumeral, ALL_ROMANS[d]);
