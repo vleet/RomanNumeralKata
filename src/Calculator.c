@@ -176,52 +176,18 @@ static char* removeSubstitutions(const char* val1){
   return expandedValue;
 }
 
-static void getMoreNumerals(int arrayToAdjust[FREQUENCY_SIZE],const char numeralNeeded){
-  if (numeralNeeded == ROMAN_I){
-      if (arrayToAdjust[getFrequencyIndex(ROMAN_V)] == 0){
-         getMoreNumerals(arrayToAdjust,getFrequencyIndex(ROMAN_V));
+static void getMoreNumerals(int arrayToAdjust[FREQUENCY_SIZE],const int numeralNeeded){
+      if (arrayToAdjust[numeralNeeded-1] == 0  && FREQUENCY_SIZE > numeralNeeded+1){
+         getMoreNumerals(arrayToAdjust,numeralNeeded-1);
       }
-      arrayToAdjust[getFrequencyIndex(ROMAN_I)]=arrayToAdjust[getFrequencyIndex(ROMAN_I)]+5;
-      arrayToAdjust[getFrequencyIndex(ROMAN_V)]--;
+      arrayToAdjust[numeralNeeded]=arrayToAdjust[numeralNeeded]+ROMAN_MULTIPLIERS[numeralNeeded];
+      arrayToAdjust[numeralNeeded-1]--;
   }
-  if (numeralNeeded == ROMAN_V){
-      if (arrayToAdjust[getFrequencyIndex(ROMAN_X)] == 0){
-         getMoreNumerals(arrayToAdjust,getFrequencyIndex(ROMAN_X));
-      }
-      arrayToAdjust[getFrequencyIndex(ROMAN_V)]=arrayToAdjust[getFrequencyIndex(ROMAN_V)]+2;
-      arrayToAdjust[getFrequencyIndex(ROMAN_X)]--;
-  }
-  if (numeralNeeded == ROMAN_X){
-      if (arrayToAdjust[getFrequencyIndex(ROMAN_L)] == 0){
-         getMoreNumerals(arrayToAdjust,getFrequencyIndex(ROMAN_L));
-      }
-      arrayToAdjust[getFrequencyIndex(ROMAN_X)]=arrayToAdjust[getFrequencyIndex(ROMAN_X)]+5;
-      arrayToAdjust[getFrequencyIndex(ROMAN_L)]--;
-  }
-  if (numeralNeeded == ROMAN_L){
-      if (arrayToAdjust[getFrequencyIndex(ROMAN_C)] == 0){
-         getMoreNumerals(arrayToAdjust,getFrequencyIndex(ROMAN_C));
-      }
-      arrayToAdjust[getFrequencyIndex(ROMAN_L)]=arrayToAdjust[getFrequencyIndex(ROMAN_L)]+2;
-      arrayToAdjust[getFrequencyIndex(ROMAN_C)]--;
-  }
-  if (numeralNeeded == ROMAN_C){
-      if (arrayToAdjust[getFrequencyIndex(ROMAN_D)] == 0){
-         getMoreNumerals(arrayToAdjust,getFrequencyIndex(ROMAN_D));
-      }
-      arrayToAdjust[getFrequencyIndex(ROMAN_C)]=arrayToAdjust[getFrequencyIndex(ROMAN_C)]+5;
-      arrayToAdjust[getFrequencyIndex(ROMAN_D)]--;
-  }
-  if (numeralNeeded == ROMAN_D){
-      arrayToAdjust[getFrequencyIndex(ROMAN_D)]=arrayToAdjust[getFrequencyIndex(ROMAN_D)]+2;
-      arrayToAdjust[getFrequencyIndex(ROMAN_M)]--;
-  }
-}
 
 static void subtractFrequencies(int difference[FREQUENCY_SIZE] ,int leftNumeral[FREQUENCY_SIZE] ,int rightNumeral[FREQUENCY_SIZE] ){
     for (int d=sizeof(ALL_ROMANS)-1; d >= 0; d--) {
-      if (leftNumeral[getFrequencyIndex(ALL_ROMANS[d])]<rightNumeral[getFrequencyIndex(ALL_ROMANS[d])]){
-          getMoreNumerals(leftNumeral, ALL_ROMANS[d]);
+      if (leftNumeral[d]<rightNumeral[d]){
+          getMoreNumerals(leftNumeral, d);
       }
       for (int i=rightNumeral[getFrequencyIndex(ALL_ROMANS[d])]; i < leftNumeral[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
           difference[getFrequencyIndex(ALL_ROMANS[d])]++;
