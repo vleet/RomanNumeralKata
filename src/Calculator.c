@@ -75,7 +75,7 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int freq
 
 
    for (int d=0; d < sizeof(ALL_ROMANS); d++) {
-      for(int i=0; i<frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
+      for(int i=0; i<frequencyArray[d]; i++ ){
           *sortedReturnValue++=ALL_ROMANS[d];
       }
 
@@ -109,7 +109,7 @@ static void writeProperlyFormattedRomanNumeral(char* sortedReturnValue, int freq
 }
 static void writeExpandedRomanNumeral(char* sortedReturnValue, int frequencyArray[FREQUENCY_SIZE]){
    for (int d=0; d < sizeof(ALL_ROMANS); d++) {
-      for(int i=0; i<frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
+      for(int i=0; i<frequencyArray[d]; i++ ){
           *sortedReturnValue++=ALL_ROMANS[d];
       }
    }
@@ -118,9 +118,9 @@ static void writeExpandedRomanNumeral(char* sortedReturnValue, int frequencyArra
 
 static void groupRomans (int frequencyArray[26]){
  for (int d=sizeof(ALL_ROMANS)-1; d >= 0; d--) {
-     if (frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]>=ROMAN_MULTIPLIERS[d]){
-          frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]=frequencyArray[getFrequencyIndex(ALL_ROMANS[d])]-ROMAN_MULTIPLIERS[d];
-          frequencyArray[getFrequencyIndex(ALL_ROMANS[d-1])]++;
+     if (frequencyArray[d]>=ROMAN_MULTIPLIERS[d]){
+          frequencyArray[d]=frequencyArray[d]-ROMAN_MULTIPLIERS[d];
+          frequencyArray[d-1]++;
      }
   }   
 }
@@ -189,18 +189,18 @@ static void subtractFrequencies(int difference[FREQUENCY_SIZE] ,int leftNumeral[
       if (leftNumeral[d]<rightNumeral[d]){
           getMoreNumerals(leftNumeral, d);
       }
-      for (int i=rightNumeral[getFrequencyIndex(ALL_ROMANS[d])]; i < leftNumeral[getFrequencyIndex(ALL_ROMANS[d])]; i++ ){
-          difference[getFrequencyIndex(ALL_ROMANS[d])]++;
+      for (int i=rightNumeral[d]; i < leftNumeral[d]; i++ ){
+          difference[d]++;
       }
     }
 }
 
 static int wouldProduceNegativeResult(const int left[], const int right[]){
    for (int d=0; d < sizeof(ALL_ROMANS); d++) {
-       if (right[getFrequencyIndex(ALL_ROMANS[d])] < left[getFrequencyIndex(ALL_ROMANS[d])]){
+       if (right[d] < left[d]){
           return 0;
        }
-       if (right[getFrequencyIndex(ALL_ROMANS[d])] > left[getFrequencyIndex(ALL_ROMANS[d])]){
+       if (right[d] > left[d]){
           return 1;
        }
     }
